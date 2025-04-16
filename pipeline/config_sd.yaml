@@ -1,0 +1,50 @@
+hydra:
+  run:
+    dir: ${oc.env:HYDRA_OUTPUT,./outputs}/SDSAE/train/${now:%Y-%m-%d_%H-%M-%S}_${slurm_id}
+  sweep:
+    dir: ${oc.env:HYDRA_OUTPUT,./outputs}/SDSAE/train/${now:%Y-%m-%d_%H-%M-%S}_${slurm_id}
+    subdir: ${hydra.job.override_dirname}
+
+defaults:
+  - _self_
+  - sae: defaults
+
+log_file: null
+log_level: INFO
+seed: 42
+dtype: float32
+dataset_path: ${oc.env:EMBEDDING_PATH,./embeddings}/CC3M_15_test_target_1035111_768.npy
+load_dataset_path: null
+seq_len: 77
+use_lens: true
+seq_id: 0
+mean_center: true
+normalize: false
+target_norm: null
+bias_init_median: true
+lr: 0.00005 # 2e-4
+beta1: 0.9
+beta2: 0.999
+eps: 6.25e-10
+weight_decay: 0
+scheduler: 1
+decay_time: 0.8
+save_path: null
+epochs: 10 #100 #200
+batch_size: 4096
+clip_grad: 1
+check_dead: 1000
+save_freq: 1
+print_freq: 300
+eval_freq: 1
+num_workers: 14
+slurm_id: -1
+project_name: SDMSAE
+
+loss:
+  reconstruction_loss: mse
+  sparse_loss: l1
+  sparse_weight: 0.00003 # 1.7e-3
+  flop_loss_weighted: true
+  flop_weight: 0
+  orthogonal_decoder_weight: 0

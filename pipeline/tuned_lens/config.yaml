@@ -1,0 +1,36 @@
+hydra:
+  run:
+    dir: ${oc.env:HYDRA_OUTPUT,./outputs}/TunedLens/${now:%Y-%m-%d_%H-%M-%S}
+
+defaults:
+  - _self_
+
+log_file: null
+log_level: INFO
+seed: 42
+dtype: float32
+
+# Dataset settings
+dataset_path: ${oc.env:EMBEDDING_PATH,./embeddings}/CC3M_15_test_target_1035111_768.npy
+seq_len: 77
+embedding_dim: 768
+
+# Training settings
+lr: 0.0001
+beta1: 0.9
+beta2: 0.999
+eps: 1e-8
+weight_decay: 0.0
+epochs: 100
+batch_size: 1024
+num_workers: 4
+
+# Model settings
+hidden_dim: 768
+num_layers: 2
+dropout: 0.1
+
+# Save settings
+save_freq: 10
+print_freq: 100
+eval_freq: 10 
