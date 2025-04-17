@@ -3,7 +3,7 @@ import torch.utils
 from tqdm import tqdm
 import torch
 
-from utils import set_logger, get_device
+from ..pipeline.utils import set_logger, get_device
 
 _, logger = set_logger(level="INFO")
 
